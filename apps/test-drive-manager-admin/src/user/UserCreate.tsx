@@ -7,8 +7,11 @@ import {
   TextInput,
   PasswordInput,
   SelectArrayInput,
+  ReferenceInput,
+  SelectInput,
 } from "react-admin";
 
+import { TestdriveTitle } from "../testdrive/TestdriveTitle";
 import { ROLES_OPTIONS } from "../user/RolesOptions";
 
 export const UserCreate = (props: CreateProps): React.ReactElement => {
@@ -24,6 +27,14 @@ export const UserCreate = (props: CreateProps): React.ReactElement => {
           optionText="label"
           optionValue="value"
         />
+        <ReferenceInput
+          source="testdrives.id"
+          reference="Testdrive"
+          label="Testdrives"
+        >
+          <SelectInput optionText={TestdriveTitle} />
+        </ReferenceInput>
+        <TextInput label="Timezone" source="timezone" />
         <TextInput label="Username" source="username" />
       </SimpleForm>
     </Create>

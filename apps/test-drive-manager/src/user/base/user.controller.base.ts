@@ -46,15 +46,34 @@ export class UserControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
+  @swagger.ApiBody({
+    type: UserCreateInput,
+  })
   async create(@common.Body() data: UserCreateInput): Promise<User> {
     return await this.service.create({
-      data: data,
+      data: {
+        ...data,
+
+        testdrives: data.testdrives
+          ? {
+              connect: data.testdrives,
+            }
+          : undefined,
+      },
       select: {
         createdAt: true,
         firstName: true,
         id: true,
         lastName: true,
         roles: true,
+
+        testdrives: {
+          select: {
+            id: true,
+          },
+        },
+
+        timezone: true,
         updatedAt: true,
         username: true,
       },
@@ -83,6 +102,14 @@ export class UserControllerBase {
         id: true,
         lastName: true,
         roles: true,
+
+        testdrives: {
+          select: {
+            id: true,
+          },
+        },
+
+        timezone: true,
         updatedAt: true,
         username: true,
       },
@@ -112,6 +139,14 @@ export class UserControllerBase {
         id: true,
         lastName: true,
         roles: true,
+
+        testdrives: {
+          select: {
+            id: true,
+          },
+        },
+
+        timezone: true,
         updatedAt: true,
         username: true,
       },
@@ -136,6 +171,9 @@ export class UserControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
+  @swagger.ApiBody({
+    type: UserUpdateInput,
+  })
   async update(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() data: UserUpdateInput
@@ -143,13 +181,29 @@ export class UserControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          testdrives: data.testdrives
+            ? {
+                connect: data.testdrives,
+              }
+            : undefined,
+        },
         select: {
           createdAt: true,
           firstName: true,
           id: true,
           lastName: true,
           roles: true,
+
+          testdrives: {
+            select: {
+              id: true,
+            },
+          },
+
+          timezone: true,
           updatedAt: true,
           username: true,
         },
@@ -187,6 +241,14 @@ export class UserControllerBase {
           id: true,
           lastName: true,
           roles: true,
+
+          testdrives: {
+            select: {
+              id: true,
+            },
+          },
+
+          timezone: true,
           updatedAt: true,
           username: true,
         },

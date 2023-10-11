@@ -7,6 +7,8 @@ export type UserOrderByInput = {
   lastName?: SortOrder;
   password?: SortOrder;
   roles?: SortOrder;
+  testdrivesId?: SortOrder;
+  timezone?: SortOrder;
   updatedAt?: SortOrder;
   username?: SortOrder;
 };

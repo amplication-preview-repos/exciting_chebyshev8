@@ -11,10 +11,12 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional } from "class-validator";
+import { IsString, IsOptional, ValidateNested } from "class-validator";
 import { IsJSONValue } from "@app/custom-validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
+import { TestdriveWhereUniqueInput } from "../../testdrive/base/TestdriveWhereUniqueInput";
+import { Type } from "class-transformer";
 
 @InputType()
 class UserUpdateInput {
@@ -60,6 +62,29 @@ class UserUpdateInput {
     nullable: true,
   })
   roles?: InputJsonValue;
+
+  @ApiProperty({
+    required: false,
+    type: () => TestdriveWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => TestdriveWhereUniqueInput)
+  @IsOptional()
+  @Field(() => TestdriveWhereUniqueInput, {
+    nullable: true,
+  })
+  testdrives?: TestdriveWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  timezone?: string | null;
 
   @ApiProperty({
     required: false,
