@@ -1,0 +1,40 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  createdAt  DateTime   @default(now())
+  firstName  String?
+  id         String     @id @default(cuid())
+  lastName   String?
+  password   String
+  roles      Json
+  testdrives Testdrive?
+  timezone   String?
+  updatedAt  DateTime   @updatedAt
+  username   String     @unique
+}
+
+model Testdrive {
+  attack_ran      Boolean?
+  attack_results  String?
+  cleanup_ran     Boolean?
+  cleanup_results String?
+  createdAt       DateTime @default(now())
+  created_users   Json?
+  errors          Json?
+  id              String   @id @default(cuid())
+  name            String
+  notes           String?
+  owner           User?    @relation(fields: [id], references: [id])
+  id              String?  @unique
+  prep_ran        Boolean?
+  prep_results    String?
+  startTime       DateTime
+  updatedAt       DateTime @updatedAt
+}
